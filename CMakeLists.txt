@@ -70,3 +70,6 @@ install(DIRECTORY include/${PROJECT_NAME}
 # install CMake package configuration
 install(EXPORT ${PROJECT_NAME}-targets DESTINATION ${LIB_DEST})
 install(FILES ${PROJECT_NAME}-config.cmake DESTINATION ${LIB_DEST})
+
+add_executable(vins_mono src/main.cpp)
+target_link_libraries(vins_mono multirotor_sim)
