@@ -4,6 +4,7 @@
 #include "multirotor_sim/state.h"
 #include "multirotor_sim/estimator_base.h"
 #include "multirotor_sim/state.h"
+#include "multirotor_sim/factors/imu.h"
 
 #include <eigen3/Eigen/Core>
 #include <vector>
@@ -22,6 +23,8 @@ public:
 private:
     ms::State _state;
     std::vector<ms::State> _state_hist;
+    double _current_t;
+    std::deque<ImuFunctor> _imu;
     //What to use for camera vectors. Also how to tell if features are the same from
     //frame to frame...
 };
