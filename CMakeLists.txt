@@ -6,6 +6,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 find_package(Eigen3 REQUIRED)
 find_package(yaml-cpp REQUIRED)
 find_package(LAPACK REQUIRED)
+find_package(Ceres REQUIRED)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/findDeps.cmake)
 
@@ -21,7 +22,8 @@ include_directories(
     ${YAML_CPP_INCLUDE_DIRS}
     ${gnss_utils_INCLUDE_DIRS}
     ${nanoflann_eigen_INCLUDE_DIRS}
-    ${geometry_INCLUDE_DIRS})
+    ${geometry_INCLUDE_DIRS}
+    ${CERES_INCLUDE_DIRS})
 
 add_library(multirotor_sim SHARED
     src/controller.cpp
@@ -71,5 +73,9 @@ install(DIRECTORY include/${PROJECT_NAME}
 install(EXPORT ${PROJECT_NAME}-targets DESTINATION ${LIB_DEST})
 install(FILES ${PROJECT_NAME}-config.cmake DESTINATION ${LIB_DEST})
 
+add_library(VINS 
+    src/vins_mono.cpp
+    src/factors/imu.cpp)
+target_link_libraries(VINS ${CERES_LIBRARIES} multirotor_sim)
 add_executable(vins_mono src/main.cpp)
-target_link_libraries(vins_mono multirotor_sim)
+target_link_libraries(vins_mono multirotor_sim VINS)
