@@ -75,7 +75,8 @@ install(FILES ${PROJECT_NAME}-config.cmake DESTINATION ${LIB_DEST})
 
 add_library(VINS 
     src/vins_mono.cpp
-    src/factors/imu.cpp)
+    src/factors/imu.cpp
+    src/factors/feature.cpp)
 target_link_libraries(VINS ${CERES_LIBRARIES} multirotor_sim)
 add_executable(vins_mono src/main.cpp)
 target_link_libraries(vins_mono multirotor_sim VINS)
