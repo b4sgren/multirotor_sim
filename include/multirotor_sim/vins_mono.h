@@ -5,6 +5,7 @@
 #include "multirotor_sim/estimator_base.h"
 #include "multirotor_sim/state.h"
 #include "multirotor_sim/factors/imu.h"
+#include "multirotor_sim/factors/feature.h"
 
 #include <eigen3/Eigen/Core>
 #include <vector>
@@ -25,6 +26,9 @@ private:
     std::vector<ms::State> _state_hist;
     double _current_t;
     std::deque<ImuFunctor> _imu;
+    std::vector<int> _current_features_idx;
+    std::vector<double> _lambda; //Inverse depth to each feature
+    std::deque<std::vector<FeatureFunctor>> _features;
     //What to use for camera vectors. Also how to tell if features are the same from
     //frame to frame...
 };
