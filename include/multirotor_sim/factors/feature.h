@@ -11,7 +11,7 @@ public:
     FeatureFunctor(const Eigen::Matrix3d &K, const Eigen::Matrix3d &R_c_from_b, const Eigen::Vector3d &p_cb,
                    const Eigen::Vector2d &pix_i, const Eigen::Vector2d &pix_j, const Eigen::Matrix3d &Xi);
 
-    Eigen::Vector3d backProjectionFunction(const Eigen::Vector2d &pix);
+    Eigen::Vector3d backProjectionFunction(const Eigen::Vector2d &pix) const;
 
     void update(const Eigen::Vector2d &pix); //Update pixel location when frame i leaves the sliding window
 
