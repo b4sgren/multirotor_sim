@@ -33,7 +33,29 @@ void VinsMono::imuCallback(const double &t, const Vector6d &z, const Matrix6d &R
 
 void VinsMono::optimize()
 {
+    ceres::Problem problem;
+    addParameterBlocks(problem);
+    addImuFactors(problem);
+    addFeatureFactors(problem);
 
+    ceres::Solver::Options options;
+    options.linear_solver_type = ceres::SPARSE_NORMAL_CHOLESKY;
+    options.max_num_iterations = 100;
+    ceres::Solver::Summary summary;
+    ceres::Solve(options, &problem, &summary);
+    std::cout << summary.FullReport();
+}
+
+void VinsMono::addParameterBlocks(ceres::Problem &problem)
+{
+}
+
+void VinsMono::addImuFactors(ceres::Problem &problem)
+{
+}
+
+void VinsMono::addFeatureFactors(ceres::Problem &problem)
+{
 }
     
 void VinsMono::imageCallback(const double& t, const ms::ImageFeat& z, const Eigen::Matrix2d& R_pix, const Matrix1d& R_depth)

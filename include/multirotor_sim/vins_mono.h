@@ -12,6 +12,7 @@
 #include <deque>
 #include <map>
 #include <string>
+#include <ceres/ceres.h>
 
 namespace ms = multirotor_sim;
 
@@ -70,6 +71,9 @@ public:
 
 private:
     void optimize();
+    void addParameterBlocks(ceres::Problem &problem);
+    void addImuFactors(ceres::Problem &problem);
+    void addFeatureFactors(ceres::Problem &problem);
 
     Eigen::Matrix3d _K;
     Eigen::Matrix3d _R_c_from_b;
