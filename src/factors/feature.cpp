@@ -1,9 +1,9 @@
 #include "multirotor_sim/factors/feature.h"
 #include "geometry/xform.h"
 
-FeatureFunctor::FeatureFunctor(const Eigen::Matrix3d &K, const Eigen::Matrix3d &R_c_from_b, const Eigen::Vector3d &p_cb,
+FeatureFunctor::FeatureFunctor(int feat_id, const Eigen::Matrix3d &K, const Eigen::Matrix3d &R_c_from_b, const Eigen::Vector3d &p_cb,
                                const Eigen::Vector2d &pix_i, const Eigen::Vector2d &pix_j, const Eigen::Matrix3d &Xi):
-    _K(K), _R_c_from_b(R_c_from_b), _p_c_wrt_b(p_cb), _pix_i(pix_i), _pix_j(pix_j), _Xi(Xi) {}
+    _feat_id(feat_id), _K(K), _R_c_from_b(R_c_from_b), _p_c_wrt_b(p_cb), _pix_i(pix_i), _pix_j(pix_j), _Xi(Xi) {}
 
 void FeatureFunctor::update(const Eigen::Vector2d &pix)
 {
@@ -53,7 +53,7 @@ bool FeatureFunctor::operator()(const T* _xi, const T*_xj, const T* lambda_i, T*
     B.row(1) = b2;
 
     Eigen::Map<Eigen::Matrix<T, 3, 1>> r(residual);
-    r = _Xi * (Phat_j - Pest_j);
+    r = _Xi * B * (Phat_j - Pest_j);
 
     return true;
 }
