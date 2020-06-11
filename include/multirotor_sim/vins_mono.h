@@ -11,6 +11,7 @@
 #include <vector>
 #include <deque>
 #include <map>
+#include <string>
 
 namespace ms = multirotor_sim;
 
@@ -62,12 +63,14 @@ class VinsMono : public multirotor_sim::EstimatorBase
 {
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 public:
-    VinsMono();
+    VinsMono(const std::string &filename);
 
     void imuCallback(const double &t, const Vector6d &z, const Matrix6d &R);
     void imageCallback(const double& t, const ms::ImageFeat& z, const Eigen::Matrix2d& R_pix, const Matrix1d& R_depth);
 
 private:
+    void optimize();
+
     Eigen::Matrix3d _K;
     Eigen::Matrix3d _R_c_from_b;
     Eigen::Vector3d _p_b_cb;
